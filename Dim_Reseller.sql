@@ -6,7 +6,7 @@ drop table Dim_Reseller
 --CREATE TABLE
 CREATE OR REPLACE TABLE Dim_Reseller(
     DimResellerID INT IDENTITY(1,1) CONSTRAINT PK_DimResellerID PRIMARY KEY NOT NULL --Surrogate Key
-	,DimLocationID VARCHAR(255) NOT NULL --Natural Key 
+    ,DimLocationID INTEGER CONSTRAINT FK_DimLocationIDReseller FOREIGN KEY REFERENCES Dim_Location (DimLocationID) NOT NULL
 	,ResellerID VARCHAR(255) NOT NULL
     ,ResellerName VARCHAR(255) NOT NULL
     ,ContactName VARCHAR(255) NOT NULL
@@ -23,7 +23,24 @@ truncate Dim_Reseller
 SELECT * FROM Dim_Reseller;
 select * from Dim_Reseller
 select count(*) from Dim_Reseller
-
+INSERT INTO Dim_Reseller
+(
+	DimLocationID
+	,ResellerID
+    ,ResellerName
+    ,ContactName
+	,PhoneNumber
+    ,Email
+)
+VALUES
+( 
+     -1
+    ,-1
+    ,'Unknown' 
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+);
 --Load characters
 INSERT INTO Dim_Reseller
 (
@@ -45,11 +62,9 @@ INSERT INTO Dim_Reseller
     a.address=b.address and a.city=b.city and a.postalcode=b.postalcode and a.stateprovince=b.state_province
     
 
-SELECT * FROM Dim_Customer;
-select * from stage_reseller
+
 select * from dim_reseller
-select * from stage_store
-TRUNCATE Dim_Channel;
+
 
 --Check that table is clear
-SELECT * FROM Dim_location
+SELECT * FROM Dim_locations

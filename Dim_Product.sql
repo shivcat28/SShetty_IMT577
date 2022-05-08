@@ -1,11 +1,11 @@
 TRUNCATE Dim_Product;
-
+drop table Dim_Product
 --Check that table is clear
 SELECT * FROM Dim_Product;
 
 --CREATE TABLE
 CREATE OR REPLACE TABLE Dim_Product(
-    DimProductID INTEGER IDENTITY(1,1) CONSTRAINT PK_DimChannelID PRIMARY KEY NOT NULL --Surrogate Key
+    DimProductID INTEGER IDENTITY(1,1) CONSTRAINT PK_DimProductID PRIMARY KEY NOT NULL --Surrogate Key
 	,ProductID INTEGER
 	,ProductTypeID INTEGER NOT NULL --Natural Key
 	,ProductCategoryID INTEGER NOT NULL
@@ -19,7 +19,6 @@ CREATE OR REPLACE TABLE Dim_Product(
 	,ProductWholesaleUnitProfit FLOAT NOT NULL
 	,ProductProfitMarginUnitPercent FLOAT NOT NULL
 );
-
 
 INSERT INTO Dim_Product
 (
@@ -36,10 +35,40 @@ INSERT INTO Dim_Product
 	,ProductWholesaleUnitProfit
 	,ProductProfitMarginUnitPercent
 )
+VALUES
+( 
+     -1
+    ,-1
+    ,-1
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+    ,-1
+    ,-1
+    ,-1
+	,-1
+    ,-1
+    ,-1
+);
+INSERT INTO Dim_Product
+(
+     ProductID
+	,ProductTypeID
+	,ProductCategoryID
+    ,ProductName
+    ,ProductType
+	,ProductCategory
+	,ProductRetailPrice
+	,ProductWholesalePrice
+	,ProductCost
+	,ProductRetailProfit
+	,ProductWholesaleUnitProfit
+	,ProductProfitMarginUnitPercent
+)
 	SELECT 
-	  a.ProductID
-     ,a.ProductTypeID
-	 ,b.ProductCategoryID
+	  a.ProductID SourceProductID
+     ,a.ProductTypeID SourceProductTypeID
+	 ,b.ProductCategoryID SourceProductCategoryID
 	 ,a.product as ProductName
 	 ,b.producttype
 	 ,c.ProductCategory
@@ -59,4 +88,4 @@ SELECT * FROM Dim_Product;
 TRUNCATE Dim_Product;
 drop table Dim_Product
 --Check that table is clear
-SELECT * FROM Dim_Product;
+SELECT * FROM Dim_Product;s

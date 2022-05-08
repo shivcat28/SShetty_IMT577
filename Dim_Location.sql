@@ -1,11 +1,11 @@
 TRUNCATE Dim_Location;
-
+drop table Dim_Location
 --Check that table is clear
 SELECT * FROM Dim_Location;
 
 --CREATE TABLE
 CREATE OR REPLACE TABLE Dim_Location(
-    DimLocationID INT IDENTITY(1,1) CONSTRAINT PK_DimChannelID PRIMARY KEY NOT NULL --Surrogate Key
+    DimLocationID INT IDENTITY(1,1) CONSTRAINT PK_LocationID PRIMARY KEY NOT NULL --Surrogate Key
 	,Address varchar(255) NOT NULL --Natural Key
 	,City varchar(255) NOT NULL
     ,PostalCode VARCHAR(255) NOT NULL
@@ -23,7 +23,22 @@ DROP TABLE Dim_Location
 SELECT * FROM Dim_Location;
 select * from Dim_Location
 select count(*) from Dim_Location
-
+INSERT INTO Dim_Location
+(
+	Address
+	,City
+    ,PostalCode
+    ,State_Province
+	,Country
+)
+VALUES
+( 
+    'Unknown' 
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+);
 --Load characters
 INSERT INTO Dim_Location
 (
@@ -58,10 +73,3 @@ INSERT INTO Dim_Location
 	FROM stage_reseller
 
 SELECT * FROM Dim_Location;
-select * from stage_customer
-select * from stage_reseller
-select * from stage_store
-TRUNCATE Dim_Channel;
-
---Check that table is clear
-SELECT * FROM Dim_Channel;

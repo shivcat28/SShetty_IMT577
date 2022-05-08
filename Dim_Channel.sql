@@ -1,13 +1,13 @@
 TRUNCATE Dim_Channel;
-
+DROP TABLE Dim_Channel
 --Check that table is clear
 SELECT * FROM Dim_Channel;
 
 --CREATE TABLE
 CREATE OR REPLACE TABLE Dim_Channel(
     DimChannelID INT IDENTITY(1,1) CONSTRAINT PK_DimChannelID PRIMARY KEY NOT NULL --Surrogate Key
-	,ChannelID INTEGER NOT NULL --Natural Key
-	,ChannelCategoryID INTEGER NOT NULL
+	,SourceChannelID INTEGER NOT NULL --Natural Key
+	,SourceChannelCategoryID INTEGER NOT NULL
     ,ChannelName VARCHAR(255) NOT NULL
     ,ChannelCategory VARCHAR(255) NOT NULL
 );
@@ -23,18 +23,31 @@ SELECT * FROM Dim_Channel;
 select * from stage_channel
 select count(*) from Dim_Channel
 
+INSERT INTO Dim_Channel
+(
+     SourceChannelID
+	,SourceChannelCategoryID 
+    ,ChannelName
+    ,ChannelCategory
+)
+VALUES
+( 
+     -1
+    ,-1
+    ,'Unknown' 
+    ,'Unknown'
+);
 --Load characters
 INSERT INTO Dim_Channel
 (
- DimChannelID
-	,ChannelID
-	,ChannelCategoryID
+     SourceChannelID
+	,SourceChannelCategoryID 
     ,ChannelName
     ,ChannelCategory
 )
 	SELECT 
-	  a.ChannelID
-     ,ChannelCategoryID
+	  a.ChannelID SourceChannelID
+     ,a.ChannelCategoryID SourceChannelCategoryID
      ,Channel as ChannelName
 	 ,ChannelCategory
      

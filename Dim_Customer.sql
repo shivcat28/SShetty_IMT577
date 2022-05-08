@@ -6,7 +6,7 @@ drop table Dim_Customer
 --CREATE TABLE
 CREATE OR REPLACE TABLE Dim_Customer(
     DimCustomerID INT IDENTITY(1,1) CONSTRAINT PK_DimCustomerID PRIMARY KEY NOT NULL --Surrogate Key
-	,DimLocationID INT NOT NULL --Natural Key 
+	,DimLocationID INTEGER CONSTRAINT FK_DimLocationIDCustomer FOREIGN KEY REFERENCES Dim_Location (DimLocationID) NOT NULL
 	,CustomerID VARCHAR(255) NOT NULL
     ,CustomerFullName VARCHAR(255) NOT NULL
     ,CustomerFirstName VARCHAR(255) NOT NULL
@@ -23,7 +23,24 @@ truncate Dim_Customer
 SELECT * FROM Dim_Customer;
 select * from Dim_Customer
 select count(*) from Dim_Customer
-
+INSERT INTO Dim_Customer
+(
+	DimLocationID
+	,CustomerID
+    ,CustomerFullName
+    ,CustomerFirstName
+	,CustomerLastName
+    ,CustomerGender
+)
+VALUES
+( 
+     -1
+    ,'Unknown' 
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+    ,'Unknown'
+);
 --Load characters
 INSERT INTO Dim_Customer
 (

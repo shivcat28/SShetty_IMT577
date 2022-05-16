@@ -37,7 +37,7 @@ NVL(s.DimStoreID, -1) AS DimStoreID
 ,NVL(r.DimResellerID, -1) AS DimResellerID
 ,c.DimChannelID
 ,d.DATE_PKEY AS DimTargetDateID
-,t.TargetSalesAmount SalesTargetAmount
+,t.TargetSalesAmount/365 SalesTargetAmount
 from STAGE_TARGETDATACHANNELRESELLERANDSTORE t
     JOIN Dim_Date d ON d.YEAR = t.YEAR
     JOIN Dim_Channel c ON C.ChannelName = 

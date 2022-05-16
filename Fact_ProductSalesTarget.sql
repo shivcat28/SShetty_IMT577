@@ -27,11 +27,12 @@ insert into Fact_ProductSalesTarget
 	,producttargetsalesquantity )
     
 select distinct p.dimproductid,d.date_pkey DimTargetDateID
-    ,t.SALESQUANTITYTARGET producttargetsalesquantity
+    ,t.SALESQUANTITYTARGET/365 producttargetsalesquantity
     from dim_product p --join stage_saleshead h on o.sourcestoreid=h.storeid 
      join STAGE_TARGETDATAPRODUCT t on p.productid=t.productid 
         join dim_date d on d.year=t.year
 
     select * from dim_date
     select * from dim_product
+select * from Fact_ProductSalesTarget
 select * from STAGE_TARGETDATAPRODUCT

@@ -36,29 +36,29 @@ insert into Fact_SalesActual(
 	,SaleExtendedCosT
 	,SaleTotalProfit
 )
-select p.dimproductid
-,NVL(o.DimStoreID, -1) DimStoreID
-,NVL(r.dimresellerid,-1) dimresellerid
-,c.dimcustomerid DimCustomerID
-,e.dimchannelid DimChannelID
-,NVL(d.date_pkey,-1) DimSaleDateID
-,NVL(l.dimlocationid,-1) dimlocationid
-,s.salesheaderid SourceSalesHeaderID
-,s.salesdetailid SourceSalesDetailID
-,NVL(s.SalesAmount,-1) SaleAmount
-,NVL(s.SalesQuantity,-1) salequantity
-,NVL(price,-1) SaleUnitPrice
-,(s.SalesQuantity*t.wholesaleprice)-(s.SalesQuantity*t.cost) SaleExtendedCost
-,(s.SalesQuantity*t.price)-(s.SalesQuantity*t.cost) SaleTotalProfit
 
-    from dim_product p left join stage_salesdetail s on p.productid=s.productid 
-    left join stage_salesheader h on s.salesheaderid=h.salesheaderid
-    left join dim_store o on h.storeid=o.sourcestoreid
-    left join dim_reseller r on r.sourceresellerid=h.resellerid
-    left join dim_customer c on c.sourcecustomerid=h.customerid
-    left join dim_channel e on e.sourcechannelid=h.channelid
-    left join dim_date d on concat(2,right(cast(h.date as date),9))= d.date
-    left join dim_location l on l.dimlocationid=r.dimlocationid
-    left join stage_product t on p.productid= t.productid
-    
-    select * from Fact_SalesActual
+SELECT
+    P.DIMPRODUCTID,
+    NVL(DS.DIMSTOREID, -1) AS DIMSTOREID,
+    NVL(DR.DIMRESELLERID, -1) AS DIMRESELLERID,
+    NVL(DC.DIMCUSTOMERID, -1) AS DIMCUSTOMERID,
+    DCH.DIMCHANNELID,
+    d.date_pkey as DimSaleDateID,
+    COALESCE(DS.DIMLOCATIONID, DC.DIMLOCATIONID, DR.DIMLOCATIONID, -1) AS DIM_LOCATIONID,
+    SH.SALESHEADERID AS SourceSalesHeaderID,
+    S.SALESDETAILID AS SourceSalesDetailID,
+    S.SALESAMOUNT AS SaleAmount,
+    S.SALESQUANTITY AS SaleQuantity,
+    p.productretailprice AS SALE_UNIT_PRICE,
+   (s.SalesQuantity*p.productwholesaleprice)-(s.SalesQuantity*p.productcost) SaleExtendedCost
+,(s.SalesQuantity*p.productretailprice)-(s.SalesQuantity*p.productcost) SaleTotalProfit
+FROM stage_salesheader SH
+INNER JOIN stage_salesdetail S ON SH.SALESHEADERID = S.SALESHEADERID
+INNER JOIN DIM_PRODUCT P ON S.PRODUCTID = P.PRODUCTID
+INNER JOIN DIM_CHANNEL DCH ON SH.CHANNELID = DCH.SOURCECHANNELID
+LEFT JOIN DIM_STORE DS ON SH.STOREID = DS.DIMSTOREID
+LEFT JOIN DIM_RESELLER DR ON SH.RESELLERID = DR.SOURCERESELLERID
+LEFT JOIN DIM_CUSTOMER DC ON SH.CUSTOMERID = DC.SOURCECUSTOMERID
+left join dim_date d on concat(2,right(cast(sh.date as date),9))= d.date
+
+select * from Fact_SalesActual

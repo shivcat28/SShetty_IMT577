@@ -9,7 +9,7 @@ What should be done in the next year to maximize store profits?*/
 --------------------Sales Views---------------
 Drop view View_DailySales
 
-CREATE VIEW View_DailySales
+CREATE OR REPLACE SECURE VIEW View_DailySales
 AS
   SELECT DISTINCT
     ds.StoreNumber,
@@ -27,7 +27,7 @@ select * from View_DailySales
   
   
 -----------Target Views----------------
-CREATE VIEW View_DailyTarget
+CREATE OR REPLACE SECURE VIEW View_DailyTarget
 AS
   SELECT DISTINCT
     s.StoreNumber,
@@ -45,7 +45,7 @@ select * from view_fact_srcsalestarget
 ---------------Sales vs Target-----------------
 drop view View_SalesToTarget
 
-CREATE or replace VIEW View_SalesToTarget
+CREATE OR REPLACE SECURE VIEW View_SalesToTarget
 AS
 SELECT DISTINCT a.StoreNumber,
       a.YEAR,
@@ -92,7 +92,7 @@ Recommend 2013 bonus amounts for each store if the total bonus pool is $2,000,00
 -----------------------------------------------------------------------*/
 
 
-CREATE or replace VIEW View_SalesToTarget_All
+CREATE OR REPLACE SECURE VIEW View_SalesToTarget_All
 AS
 SELECT DISTINCT a.StoreNumber,
       a.YEAR,
@@ -108,7 +108,7 @@ SELECT DISTINCT a.StoreNumber,
   
   
  
-  CREATE or replace VIEW view_Bonus
+CREATE OR REPLACE SECURE VIEW view_Bonus
 AS
   select *, 
     case when rn=1 then '30%'
@@ -147,7 +147,7 @@ to sales difference the least bonus, 0
 /*Assess product sales by day of the week at stores 10 and 21. What can we learn about sales trends? */
 
 
-CREATE or replace VIEW View_Trend as 
+CREATE OR REPLACE SECURE VIEW View_Trend as 
   SELECT DISTINCT SV.StoreNumber,
       D.DAY_NUM_IN_WEEK,
       SUM(S.SaleAmount) SaleAmount,
@@ -192,7 +192,7 @@ The above query shows stores 10 and 21's product level analysis:
 --Should any new stores be opened? Include all stores in your analysis if necessary. If so, where? Why or why not?*/
 
   
-create or replace view View_StorePerformanceByLocation as
+create OR REPLACE SECURE view View_StorePerformanceByLocation as
   SELECT dense_RANK() OVER (PARTITION BY YEAR ORDER BY ExceededTargetBy DESC) AS rn,
       a.StoreNumber,
       Year,

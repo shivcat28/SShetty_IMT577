@@ -147,7 +147,7 @@ to sales difference the least bonus, 0
 /*Assess product sales by day of the week at stores 10 and 21. What can we learn about sales trends? */
 
 
-CREATE or replace VIEW Trend as 
+CREATE or replace VIEW View_Trend as 
   SELECT DISTINCT SV.StoreNumber,
       D.DAY_NUM_IN_WEEK,
       SUM(S.SaleAmount) SaleAmount,

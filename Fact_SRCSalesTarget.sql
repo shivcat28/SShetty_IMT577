@@ -11,19 +11,6 @@ CREATE TABLE Fact_SRCSalesTarget
 
 );
 
-insert into Fact_SRCSalesTarget
-(DimStoreID 
-	 ,DimResellerID
-	,DimChannelID
-    ,DimTargetDateID
-	,salestargetamount)
-    
-values
-(-1,
--1,
--1,
--1,
--1)
 
 insert into Fact_SRCSalesTarget
 (DimStoreID 

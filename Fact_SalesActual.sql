@@ -18,38 +18,7 @@ CREATE TABLE Fact_SalesActual
 	,SaleTotalProfit FLOAT
 );
 
-insert into Fact_SalesActual(
-    DimProductID
-    ,DimStoreID
-    ,DimResellerID
-	,DimCustomerID
-    ,DimChannelID
-    ,DimSaleDateID
-    ,DimLocationID
-    ,SourceSalesHeaderID
-	,SourceSalesDetailID
-	,SaleAmount
-	,SaleQuantity
-	,SaleUnitPrice
-	,SaleExtendedCosT
-	,SaleTotalProfit
-)
-values
-(
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1,
--1)
+
 
 insert into Fact_SalesActual(
     DimProductID

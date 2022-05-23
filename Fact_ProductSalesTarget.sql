@@ -15,17 +15,6 @@ insert into Fact_ProductSalesTarget
 	 ,DimTargetDateID
 	,producttargetsalesquantity )
     
-values
-(-1,
--1,
--1)
-
-insert into Fact_ProductSalesTarget
-(
-  DimProductID
-	 ,DimTargetDateID
-	,producttargetsalesquantity )
-    
 select distinct p.dimproductid,d.date_pkey DimTargetDateID
     ,t.SALESQUANTITYTARGET/365 producttargetsalesquantity
     from dim_product p --join stage_saleshead h on o.sourcestoreid=h.storeid 
